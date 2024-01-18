@@ -1,0 +1,22 @@
+{
+  "name": "labeddit--backend-fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.5",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7",
+    "ts-node-dev": "^2.0.0"
+  }
+}
