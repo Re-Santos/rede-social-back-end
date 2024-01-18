@@ -1,0 +1,12 @@
+# Node.js
+node_modules/
+
+# Arquivos de compilação TypeScript
+dist/
+
+# Arquivos gerados pelo Jest
+coverage/
+
+# Outros arquivos de configuração e logs
+*.log
+.env
