@@ -9,12 +9,12 @@ CREATE TABLE users(
     created_at TEXT DEFAULT(DATE()) NOT NULL
 );
 
- DROP TABLE IF EXISTS users;
+--  DROP TABLE IF EXISTS users;
 
 INSERT INTO users (id, name, email, password, role, created_at)
 VALUES 
-    ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'user', CURRENT_DATE),
-    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'user', CURRENT_DATE);
+    ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'NORMAL', CURRENT_DATE),
+    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_DATE);
 
 -- DELETE FROM users;
 SELECT * FROM users;
