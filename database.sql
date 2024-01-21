@@ -2,19 +2,20 @@
 -- Active: 1704402367109@@127.0.0.1@3306
 CREATE TABLE users(
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
-    name TEXT NOT NULL,
+    username TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    role TEXT NOT NULL,
+    role TEXT DEFAULT 'NORMAL' NOT NULL,
     created_at TEXT DEFAULT(DATE()) NOT NULL
 );
 
---  DROP TABLE IF EXISTS users;
+ DROP TABLE IF EXISTS users;
 
-INSERT INTO users (id, name, email, password, role, created_at)
+INSERT INTO users (id, username, email, password, role, created_at)
 VALUES 
     ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'NORMAL', CURRENT_DATE),
-    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_DATE);
+    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_DATE),
+    ('u3', 'Ana', 'ana@email.com', 'ana123', 'ADMIN', CURRENT_DATE);
 
 -- DELETE FROM users;
 SELECT * FROM users;
@@ -38,6 +39,9 @@ INSERT INTO posts (id, creator_id, content, comments, likes, dislikes, created_a
 VALUES
   ('p1', 'u1', 'Conteúdo do Post 1', 0, 0, 0, CURRENT_DATE, CURRENT_DATE),
   ('p2', 'u2', 'Conteúdo do Post 2', 0, 0, 0, CURRENT_DATE, CURRENT_DATE);
+
+
+-- DELETE FROM posts;
 
 SELECT * FROM POSTS;
 
@@ -66,7 +70,7 @@ VALUES
 
 SELECT * FROM likes_dislikes;
 
-
+-- -- DELETE  FROM likes_dislikes;
 -- DROP TABLE IF EXISTS likes_dislikes;
 
 CREATE TABLE comments_posts(
@@ -99,6 +103,8 @@ VALUES
 
 SELECT * FROM comments_posts;
 
+-- DELETE FROM comments_posts;
+
 CREATE TABLE comments_likes(
     user_id TEXT NOT NULL,
     comment_id TEXT NOT NULL,
@@ -123,3 +129,5 @@ VALUES
   ('u2', 'cp4', 0);
 
 SELECT * FROM comments_likes;
+
+-- DELETE FROM comments_likes;
