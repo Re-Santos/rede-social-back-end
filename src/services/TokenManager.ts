@@ -11,7 +11,7 @@ export enum USER_ROLES {
 
 export interface TokenPayload {
   id: string;
-  name: string;
+  username: string;
   role: USER_ROLES;
 }
 
