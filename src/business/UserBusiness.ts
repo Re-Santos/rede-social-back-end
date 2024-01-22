@@ -59,13 +59,6 @@ export default class UserBusiness {
 }
   }
 
-//getAllUsers
-// public getAllUsers = async (): Promise<UserModel[]> => {
-//   // Lógica para buscar todos os usuários no banco de dados
-//   const usersDB = await this.userDatabase.getAllUsers();
-//   return usersDB.map((userDB) => User.toUserModel(userDB));
-// }
-// Em UserBusiness
 public getAllUsers = async (): Promise<UserModel[]> => {
   const usersDB = await this.userDatabase.getAllUsers();
   const usersModels = usersDB.map(userDB => new User(userDB.id, userDB.username, userDB.email, userDB.password).toUserModel());
