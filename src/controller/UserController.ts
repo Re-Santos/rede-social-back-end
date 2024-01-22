@@ -38,10 +38,10 @@ export default class UserController {
 //getAllUsers
 public getAllUsers = async (req: Request, res: Response) => {
   try {
-    // Chame o método correspondente em userBusiness para buscar todos os usuários
+    // Chamando o método correspondente em userBusiness para buscar todos os usuários
     const users = await this.userBusiness.getAllUsers();
 
-    // Responda com a lista de usuários
+    // Resposta lista de usuários
     res.status(200).send(users);
   } catch (error) {
     console.log(error);

@@ -1,4 +1,4 @@
--- Active: 1705545285238@@127.0.0.1@3306
+-- Active: 1705932312160@@127.0.0.1@3306
 -- Active: 1704402367109@@127.0.0.1@3306
 CREATE TABLE users(
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
@@ -6,17 +6,20 @@ CREATE TABLE users(
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     role TEXT DEFAULT 'NORMAL' NOT NULL,
-    created_at TEXT DEFAULT(DATE()) NOT NULL
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
- DROP TABLE IF EXISTS users;
+--  DROP TABLE IF EXISTS users;
 
 INSERT INTO users (id, username, email, password, role, created_at)
 VALUES 
-    ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'NORMAL', CURRENT_DATE),
-    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_DATE),
-    ('u3', 'Ana', 'ana@email.com', 'ana123', 'ADMIN', CURRENT_DATE);
+    ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'NORMAL', CURRENT_TIMESTAMP),
+    ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_TIMESTAMP),
+    ('u3', 'Ana', 'ana@email.com', 'ana123', 'ADMIN', CURRENT_TIMESTAMP);
 
+INSERT INTO users (id, username, email, password, role, created_at)
+VALUES
+    ('u4','Milena', 'milena@email.com','milena123', 'NORMAL', CURRENT_TIMESTAMP );
 -- DELETE FROM users;
 SELECT * FROM users;
 
