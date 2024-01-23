@@ -29,5 +29,8 @@ userRouter.get('/all', userController.getAllUsers);
 
 userRouter.post('/signup', userController.signup);
 
+userRouter.post('/login', userController.login);
+
+
 
 export { userRouter };

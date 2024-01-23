@@ -6,6 +6,9 @@ import { IdGenerator } from "../services/IdGenerator";
 import { TokenManager, USER_ROLES, TokenPayload} from "../services/TokenManager";
 import User, { UserDB, UserModel } from "../models/UserModel";
 import { SignupInputDTO, SignupOutputDTO } from "../dtos/signup.dto";
+import { LoginInputDTO, LoginOutputDTO } from "../dtos/login.dto";
+import { NotFoundError } from "../errors/NotFoundError";
+import { GetUsersInputDTO, GetUsersOutputDTO } from "../dtos/getUsers.dto";
 
 export default class UserBusiness {
   constructor(
@@ -32,7 +35,9 @@ export default class UserBusiness {
       newId,
       input.username,
       input.email,
-      hashedPassword
+      hashedPassword,
+      USER_ROLES.NORMAL,
+      new Date()
     );
     
     //salva o novo usuário no banco de dados
@@ -57,12 +62,105 @@ export default class UserBusiness {
     console.error("Erro durante o signup:", error);
     throw error; 
 }
+  };
+
+//AllUsers
+
+public getAllUsers = async (input: GetUsersInputDTO): Promise<UserModel[] | GetUsersOutputDTO> => {
+  const { q, token } = input;
+
+  const payload = this.tokenManager.getPayload(token);
+
+  if (!payload || payload === null) {
+      throw new BadRequestError("Invalid token.");
   }
 
-public getAllUsers = async (): Promise<UserModel[]> => {
-  const usersDB = await this.userDatabase.getAllUsers();
-  const usersModels = usersDB.map(userDB => new User(userDB.id, userDB.username, userDB.email, userDB.password).toUserModel());
-  return usersModels;
+  if (payload.role !== USER_ROLES.NORMAL) {
+      throw new BadRequestError("Only Admins can use this function.");
+  }
+
+  if (q) {
+      const [userDB]: UserDB[] = await this.userDatabase.getUsersById(q);
+
+      if (!userDB) {
+          throw new NotFoundError("User not found.");
+      }
+
+      const user: User = new User(
+          userDB.id,
+          userDB.username,
+          userDB.email,
+          userDB.password,
+          userDB.role as USER_ROLES,
+          new Date(userDB.created_at)
+      );
+
+      const userModel: UserModel = user.toUserModel();
+
+      return [userModel];
+      
+  } else {
+      const usersDB: UserDB[] = await this.userDatabase.getAllUsers();
+
+      const users: UserModel[] = usersDB.map((userDB) => {
+          const user = new User(
+              userDB.id,
+              userDB.username,
+              userDB.email,
+              userDB.password,
+              userDB.role,
+              new Date(userDB.created_at)
+          );
+
+          return user.toUserModel();
+      });
+
+      return users;
+  }
+};
+
+//login
+public login = async (input: LoginInputDTO): Promise<LoginOutputDTO> => {
+
+  const { email, password } = input
+
+  const userDB: UserDB | undefined = await this.userDatabase.getUserByEmail(email);
+
+  if (!userDB) {
+      throw new NotFoundError("Email not found.")
+  }
+
+  const hashedPassword: string = userDB.password
+
+  const isPasswordCorrect = await this.hashManager.compare(password, hashedPassword)
+  if (!isPasswordCorrect) {
+      throw new BadRequestError("Incorrect email or password.")
+  }
+
+  const user: User = new User(
+      userDB.id,
+      userDB.username,
+      userDB.email,
+      userDB.password,
+      userDB.role,
+      userDB.created_at
+  )
+
+  const payload: TokenPayload = {
+      id: user.getId(),
+      username: user.getName(),
+      role: user.getRole()
+  }
+
+  const token: string = this.tokenManager.createToken(payload)
+
+  const output: LoginOutputDTO = {
+      message: "Logged in.",
+      token
+  }
+
+  return output
 }
+
 
 }
