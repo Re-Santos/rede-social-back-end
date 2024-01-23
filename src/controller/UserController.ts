@@ -3,6 +3,8 @@ import UserBusiness from "../business/UserBusiness";
 import { ZodError } from "zod";
 import { BaseError } from "../errors/BaseError";
 import { SignupSchema } from "../dtos/signup.dto";
+import { LoginSchema } from "../dtos/login.dto";
+import { GetUsersInputDTO } from "../dtos/getUsers.dto";
 
 export default class UserController {
   constructor(
@@ -36,22 +38,48 @@ export default class UserController {
     }
   }
 //getAllUsers
+
 public getAllUsers = async (req: Request, res: Response) => {
   try {
-    // Chamando o método correspondente em userBusiness para buscar todos os usuários
-    const users = await this.userBusiness.getAllUsers();
+    //instância
+    const input: GetUsersInputDTO = {
+      q: req.query.q as string || '',
+      token: req.headers.authorization as string || ''
+    };
 
-    // Resposta lista de usuários
-    res.status(200).send(users);
+    // Chamando o método correspondente em userBusiness para buscar todos os usuários
+    const users = await this.userBusiness.getAllUsers(input);
+
+    // Retornando um objeto JSON com a chave "users"
+    res.status(200).json({ users });
   } catch (error) {
     console.log(error);
 
     if (error instanceof BaseError) {
-      res.status(error.statusCode).send(error.message);
+      res.status(error.statusCode).json({ message: error.message });
     } else {
-      res.status(500).send("Erro inesperado");
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
-}
-}
+};
 
+public login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const input = LoginSchema.parse({
+      email,
+      password,
+    });
+
+    // Chamando a lógica de login na UserBusiness
+    const output = await this.userBusiness.login(input);
+
+    // Respondendo com o token
+    res.status(200).send(output);
+  } catch (error) {
+    console.log(error);
+    
+    res.status(400).send({ message: "Invalid input data." });
+  }
+};
+}
