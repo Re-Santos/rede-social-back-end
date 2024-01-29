@@ -19,17 +19,15 @@ export default class UserDatabase extends BaseDatabase {
     return result
   }
 
-
-
-  public getAllUsers = async (): Promise<UserDB[]> => {
-    const users: UserDB[] = await BaseDatabase
-      .connection(UserDatabase.TABLE_USERS)
-      .select("*");
+  // public getAllUsers = async (): Promise<UserDB[]> => {
+  //   const users: UserDB[] = await BaseDatabase
+  //     .connection(UserDatabase.TABLE_USERS)
+  //     .select("*");
   
-    return users;
-  }
+  //   return users;
+  // }
 
-// get user by email
+
 public getUserByEmail = async (email: string): Promise<UserDB | undefined> => {
   const [user] = await BaseDatabase
     .connection(UserDatabase.TABLE_USERS)
