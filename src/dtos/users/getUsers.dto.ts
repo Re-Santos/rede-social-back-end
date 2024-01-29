@@ -1,4 +1,4 @@
-import { USER_ROLES } from "../services/TokenManager";
+import { USER_ROLES } from "../../services/TokenManager";
 
 
 export interface GetUsersInputDTO {

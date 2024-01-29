@@ -5,10 +5,10 @@ import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
 import { TokenManager, USER_ROLES, TokenPayload} from "../services/TokenManager";
 import User, { UserDB, UserModel } from "../models/UserModel";
-import { SignupInputDTO, SignupOutputDTO } from "../dtos/signup.dto";
-import { LoginInputDTO, LoginOutputDTO } from "../dtos/login.dto";
+import { SignupInputDTO, SignupOutputDTO } from "../dtos/users/signup.dto";
+import { LoginInputDTO, LoginOutputDTO } from "../dtos/users/login.dto";
 import { NotFoundError } from "../errors/NotFoundError";
-import { GetUsersInputDTO, GetUsersOutputDTO } from "../dtos/getUsers.dto";
+import { GetUsersInputDTO, GetUsersOutputDTO } from "../dtos/users/getUsers.dto";
 
 export default class UserBusiness {
   constructor(
@@ -66,58 +66,60 @@ export default class UserBusiness {
 
 //AllUsers
 
-public getAllUsers = async (input: GetUsersInputDTO): Promise<UserModel[] | GetUsersOutputDTO> => {
-  const { q, token } = input;
+// public getAllUsers = async (input: GetUsersInputDTO): Promise<UserModel[] | GetUsersOutputDTO> => {
+//   const { q, token } = input;
 
-  const payload = this.tokenManager.getPayload(token);
+//   const payload = this.tokenManager.getPayload(token);
 
-  if (!payload || payload === null) {
-      throw new BadRequestError("Invalid token.");
-  }
+//   if (!payload || payload === null) {
+//       throw new BadRequestError("Invalid token.");
+//   }
 
-  if (payload.role !== USER_ROLES.NORMAL) {
-      throw new BadRequestError("Only Admins can use this function.");
-  }
+//   if (payload.role !== USER_ROLES.NORMAL) {
+//       throw new BadRequestError("Only Admins can use this function.");
+//   }
 
-  if (q) {
-      const [userDB]: UserDB[] = await this.userDatabase.getUsersById(q);
+//   if (q) {
+//       const [userDB]: UserDB[] = await this.userDatabase.getUsersById(q);
 
-      if (!userDB) {
-          throw new NotFoundError("User not found.");
-      }
+//       if (!userDB) {
+//           throw new NotFoundError("User not found.");
+//       }
 
-      const user: User = new User(
-          userDB.id,
-          userDB.username,
-          userDB.email,
-          userDB.password,
-          userDB.role as USER_ROLES,
-          new Date(userDB.created_at)
-      );
+//       const user: User = new User(
+//           userDB.id,
+//           userDB.username,
+//           userDB.email,
+//           userDB.password,
+//           userDB.role as USER_ROLES,
+//           new Date(userDB.created_at)
+//       );
 
-      const userModel: UserModel = user.toUserModel();
+//       const userModel: UserModel = user.toUserModel();
 
-      return [userModel];
+//       return [userModel];
       
-  } else {
-      const usersDB: UserDB[] = await this.userDatabase.getAllUsers();
+//   } else {
+//       const usersDB: UserDB[] = await this.userDatabase.getAllUsers();
 
-      const users: UserModel[] = usersDB.map((userDB) => {
-          const user = new User(
-              userDB.id,
-              userDB.username,
-              userDB.email,
-              userDB.password,
-              userDB.role,
-              new Date(userDB.created_at)
-          );
+//       const users: UserModel[] = usersDB.map((userDB) => {
+//           const user = new User(
+//               userDB.id,
+//               userDB.username,
+//               userDB.email,
+//               userDB.password,
+//               userDB.role,
+//               new Date(userDB.created_at)
+//           );
 
-          return user.toUserModel();
-      });
+//           return user.toUserModel();
+//       });
 
-      return users;
-  }
-};
+//       return users;
+//   }
+// }; // oficial
+
+
 
 //login
 public login = async (input: LoginInputDTO): Promise<LoginOutputDTO> => {
