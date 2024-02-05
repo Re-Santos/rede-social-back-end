@@ -37,33 +37,6 @@ export default class UserController {
       }
     }
   }
-//getAllUsers
-
-// public getAllUsers = async (req: Request, res: Response) => {
-//   try {
-//     //instância
-//     const input: GetUsersInputDTO = {
-//       q: req.query.q as string || '',
-//       token: req.headers.authorization as string || ''
-//     };
-
-//     // Chamando o método correspondente em userBusiness para buscar todos os usuários
-//     const users = await this.userBusiness.getAllUsers(input);
-
-//     // Retornando um objeto JSON com a chave "users"
-//     res.status(200).json({ users });
-//   } catch (error) {
-//     console.log(error);
-
-//     if (error instanceof BaseError) {
-//       res.status(error.statusCode).json({ message: error.message });
-//     } else {
-//       res.status(500).json({ message: "Internal Server Error" });
-//     }
-//   }
-// };// codigo oficial sem erro no login signup
-///////////////////////////////////get all teste abaixo
-
 
 public login = async (req: Request, res: Response) => {
   try {

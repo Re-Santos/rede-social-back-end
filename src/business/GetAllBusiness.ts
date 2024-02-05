@@ -1,4 +1,3 @@
-// import GetAllDatabase from "../database/GetAllDatabase"; // Importação com a capitalização correta
 import { UserDB } from "../models/UserModel";
 import { BaseError } from "../errors/BaseError";
 import { BadRequestError } from "../errors/BadRequestError";

@@ -1,4 +1,4 @@
--- Active: 1705932312160@@127.0.0.1@3306
+-- Active: 1706561341532@@127.0.0.1@3306
 -- Active: 1704402367109@@127.0.0.1@3306
 CREATE TABLE users(
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
@@ -15,40 +15,42 @@ INSERT INTO users (id, username, email, password, role, created_at)
 VALUES 
     ('u1', 'Amanda', 'amanda@email.com', 'amanda123', 'NORMAL', CURRENT_TIMESTAMP),
     ('u2', 'Jéssica', 'jessica@email.com', 'jessica123', 'NORMAL', CURRENT_TIMESTAMP),
-    ('u3', 'Ana', 'ana@email.com', 'ana123', 'ADMIN', CURRENT_TIMESTAMP);
+    ('u3', 'Ana', 'ana@email.com', 'ana123', 'ADMIN', CURRENT_TIMESTAMP),
+    ('u4','Milena', 'milena@email.com','milena123', 'NORMAL', CURRENT_TIMESTAMP );
 
 INSERT INTO users (id, username, email, password, role, created_at)
-VALUES
-    ('u4','Milena', 'milena@email.com','milena123', 'NORMAL', CURRENT_TIMESTAMP );
+VALUES 
+   ('u5', 'Estrela', 'estrela@email.com', 'estrela123', 'NORMAL', CURRENT_TIMESTAMP);
 -- DELETE FROM users;
 SELECT * FROM users;
 
-CREATE TABLE posts(
+CREATE TABLE posts (
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
-    creator_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
     content TEXT NOT NULL,
-    comments INTEGER NOT NULL,
     likes INTEGER NOT NULL,
     dislikes INTEGER NOT NULL,
-    created_at TEXT DEFAULT(DATETIME()) NOT NULL,
-    updated_at TEXT DEFAULT (DATETIME()) NOT NULL,
-    
-    Foreign Key (creator_id) REFERENCES users(id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+    comments INTEGER NOT NULL DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-INSERT INTO posts (id, creator_id, content, comments, likes, dislikes, created_at, updated_at)
+
+INSERT INTO posts (id, user_id, content, likes, dislikes, created_at, updated_at)
 VALUES
-  ('p1', 'u1', 'Conteúdo do Post 1', 0, 0, 0, CURRENT_DATE, CURRENT_DATE),
-  ('p2', 'u2', 'Conteúdo do Post 2', 0, 0, 0, CURRENT_DATE, CURRENT_DATE);
+  ('p1', 'u1', 'Conteúdo do Post 1', 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+  ('p2', 'u2', 'Conteúdo do Post 2', 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+INSERT INTO posts (id, user_id, content, likes, dislikes, created_at, updated_at)
+VALUES ('p3', 'u3', 'Conteúdo do Post 3', 0, 0, CURRENT_DATE, CURRENT_DATE);
 
 
--- DELETE FROM posts;
+SELECT * FROM users WHERE id = 'u3';
+
 
 SELECT * FROM POSTS;
 
--- DROP TABLE IF EXISTS posts;
 
 CREATE TABLE likes_dislikes(
     user_id TEXT NOT NULL,
@@ -134,3 +136,23 @@ VALUES
 SELECT * FROM comments_likes;
 
 -- DELETE FROM comments_likes;
+
+SELECT * FROM users;
+SELECT * FROM posts;
+
+
+DROP TABLE IF EXISTS users;
+
+DROP TABLE IF EXISTS posts;
+
+DROP TABLE IF EXISTS likes_dislikes;
+
+DROP TABLE IF EXISTS comments_posts;
+
+DROP TABLE IF EXISTS likes_dislikes_post_comment;
+
+DELETE FROM users;
+DELETE FROM posts;
+DELETE FROM likes_dislikes;
+DELETE FROM comments_posts;
+DELETE FROM likes_dislikes_post_comment;
