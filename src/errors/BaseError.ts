@@ -1,17 +1,10 @@
-// export abstract class BaseError extends Error {
-//     constructor(
-//         public statusCode: number,
-//         message: string
-//     ) {
-//         super(message)
-//     }
-    
-//   } // antes de get all
+export class BaseError extends Error {
+  public statusCode: number; // Adicione esta linha
 
-export abstract class BaseError extends Error {
-    constructor(public message: string, public statusCode: number) {
-      super(message);
-      Object.setPrototypeOf(this, new.target.prototype);
-    }
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.name = this.constructor.name;
+    this.statusCode = statusCode;
+    Object.setPrototypeOf(this, BaseError.prototype);
   }
-  
+}

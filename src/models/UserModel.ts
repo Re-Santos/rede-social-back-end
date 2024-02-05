@@ -18,9 +18,10 @@ export interface UserModel {
   createdAt: string;
 }
 
-export interface TokenPayload {
-  id: string;
-}
+// export interface TokenPayload {
+//   id: string;
+//   username:string;
+// }
 
 export default class User {
   constructor(

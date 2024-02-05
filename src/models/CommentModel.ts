@@ -1,4 +1,3 @@
-
 export class CommentModel {
   constructor(
     public id: string,
