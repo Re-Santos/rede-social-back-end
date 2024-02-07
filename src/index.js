@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const userRouter_1 = require("./router/userRouter");
-// import { postRouter } from './router/postRouter'
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -16,7 +15,6 @@ app.listen(Number(process.env.PORT) || 3003, () => {
     console.log(`Servidor rodando na porta ${Number(process.env.PORT) || 3003}`);
 });
 app.use("/users", userRouter_1.userRouter);
-// app.use("/posts", postRouter)
 app.get("/ping", (req, res) => {
     res.send("Pong!");
 });
