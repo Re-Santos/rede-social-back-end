@@ -1,23 +1,23 @@
-// import { PostsModels } from "../../types"
+import { PostsModels } from "../../types"
 
-// export interface GetPostInput {
-//     token: string | undefined
-// }
+export interface GetPostInput {
+    token: string | undefined
+}
 
-// export type GetPostOutput = PostsModels []
+export type GetPostOutput = PostsModels []
 
-// export interface CreatePostInput {
-//     token: string,
-//     content: unknown
-// }
+export interface CreatePostInput {
+    token: string,
+    content: unknown
+}
 
-// export interface LikeOrDislikeInput {
-//     idToLikeOrDislike: string,
-//     token: string | undefined,
-//     like: unknown
-// }
-// export interface createCommentInput{
-//     id_post: string,
-//     comment: string,
-//     token: string 
-// }
+export interface LikeOrDislikeInput {
+    idToLikeOrDislike: string,
+    token: string | undefined,
+    like: unknown
+}
+export interface createCommentInput{
+    id_post: string,
+    comment: string,
+    token: string 
+}
