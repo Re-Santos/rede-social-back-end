@@ -1,4 +1,4 @@
--- Active: 1707174442861@@127.0.0.1@3306
+-- Active: 1709125152454@@127.0.0.1@3306
 -- Active: 1704402367109@@127.0.0.1@3306
 CREATE TABLE users(
     id TEXT UNIQUE PRIMARY KEY NOT NULL,
@@ -30,20 +30,17 @@ CREATE TABLE posts (
     content TEXT NOT NULL,
     likes INTEGER NOT NULL,
     dislikes INTEGER NOT NULL,
-    comments INTEGER NOT NULL DEFAULT 0,
+    comment TEXT, 
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
-INSERT INTO posts (id, user_id, content, likes, dislikes, created_at, updated_at)
+INSERT INTO posts (id, user_id, content, likes, dislikes, comment, created_at, updated_at)
 VALUES
-  ('p1', 'u1', 'Conteúdo do Post 1', 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-  ('p2', 'u2', 'Conteúdo do Post 2', 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-INSERT INTO posts (id, user_id, content, likes, dislikes, created_at, updated_at)
-VALUES ('p3', 'u3', 'Conteúdo do Post 3', 0, 0, CURRENT_DATE, CURRENT_DATE);
+  ('p1', 'u1', 'Conteúdo do Post 1', 0, 0, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+  ('p2', 'u2', 'Conteúdo do Post 2', 0, 0, '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+  ('p3', 'u3', 'Conteúdo do Post 3', 0, 0, '', CURRENT_DATE, CURRENT_DATE);
 
 
 SELECT * FROM users WHERE id = 'u3';
