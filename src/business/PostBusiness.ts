@@ -126,9 +126,10 @@ export class PostsBusiness {
     // create comment
 
     public createComment = async (input: createCommentInput): Promise<void> => {
-        const { id_post, comment, token } = input
-        if (id_post !== "string") {
-            throw new BadRequestError("'ID_POST' deve ser string")
+        const { post_id, comment, token } = input
+
+        if (post_id !== "string") {
+            throw new BadRequestError("'post_id' deve ser string")
         }
         if (comment === null) {
             throw new BadRequestError("'COMMENT' inválido")
@@ -136,14 +137,14 @@ export class PostsBusiness {
         if (typeof comment !== "string") {
             throw new BadRequestError("'COMMENT' deve ser uma string")
         }
-        if (typeof id_post !== "string") {
-            throw new BadRequestError("'ID_POST' deve ser uma string")
+        if (typeof post_id !== "string") {
+            throw new BadRequestError("'post_id' deve ser uma string")
         }
         const payload = this.tokenManager.getPayload(token)
         if (payload === null) {
             throw new BadRequestError("'TOKEN' inválido")
         }
-        const postById = await this.postsDatabase.getPostById(id_post)
+        const postById = await this.postsDatabase.getPostById(post_id)
         if (!postById) {
             throw new BadRequestError("'POST' não encontrado")
         }
