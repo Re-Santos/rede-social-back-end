@@ -17,7 +17,7 @@ export interface LikeOrDislikeInput {
     like: unknown
 }
 export interface createCommentInput{
-    id_post: string,
+    post_id: string,
     comment: string,
     token: string 
 }

@@ -52,16 +52,16 @@ export class PostsController {
     public createComment = async (req: Request, res: Response) => {
         try {
             const input: createCommentInput = {
-                id_post: req.body.id_post,
+                post_id: String(req.body.post_id),
                 comment: req.body.comment,
-                token: req.body.authorization as string,
-            }
+                token: req.headers.authorization as string,
+            };
 
             const output = await this.PostsBusiness.createComment(input)
             res.status(201).send(output)
         } catch (error) {
             console.log(error)
-
+    
             if (error instanceof BaseError) {
                 res.status(error.statusCode).send(error.message)
             } else {

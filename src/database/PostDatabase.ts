@@ -5,7 +5,7 @@ import UserDatabase from "./UserDatabase";
 export class PostsDatabase extends BaseDatabase {
     public static TABLE_POSTS = "posts"
     public static TABLE_USERS = "users"
-    public static TABLE_COMMENTS = "comment"
+    public static TABLE_COMMENTS = "comments_posts"
     public static TABLE_POSTS_LIKEDISLIKE = "posts_likes_dislikes"
     public static TABLE_COMMENTS_LIKEDISLIKE = "comments_likes_dislikes"
 
