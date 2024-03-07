@@ -74,6 +74,14 @@ A autenticação é realizada utilizando JSON Web Token (JWT). Certifique-se de 
       "content": "Conteúdo da postagem"
     }
     ```
+- **GET /posts**: Busca todas as postagens.
+  - Headers:
+    ```
+    Authorization: Bearer SEU_TOKEN_JWT
+    ```
+    
+Lembre-se de incluir o token JWT no cabeçalho das requisições autorizadas.
+ 
 
 ## Contribuições
 Sinta-se à vontade para contribuir! Abra uma issue ou envie uma solicitação de pull.
