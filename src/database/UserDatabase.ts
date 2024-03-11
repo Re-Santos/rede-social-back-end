@@ -1,6 +1,7 @@
 import { UserDB } from "../models/UserModel";
 import { BaseDatabase } from "./BaseDatabase";
 
+
 export default class UserDatabase extends BaseDatabase {
   public static TABLE_USERS = "users"
 
