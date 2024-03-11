@@ -1,12 +1,15 @@
+
 import { HashManager } from "../../src/services/HashManager";
 import { TokenPayload, USER_ROLES } from "../../src/services/TokenManager";
 
 export class TokenManagerMock implements HashManager {
   public hash = async (plainText: string): Promise<string> => {
+
     return `hashed-${plainText}`;
   }
 
   public compare = async (plainText: string, hash: string): Promise<boolean> => {
+
     const hashedPlainText = await this.hash(plainText);
     return hashedPlainText === hash;
   }
@@ -17,6 +20,7 @@ export class TokenManagerMock implements HashManager {
       return "token-mock";
 
     } else if (payload.id === "id-mock-usernormal") {
+
       // Mock para usuário normal
       return "token-mock-usernormal";
 
@@ -25,6 +29,12 @@ export class TokenManagerMock implements HashManager {
       return "token-mock-useradmin";
     } else {
       return "";
+
+      return "token-mock-usernormal";
+
+    } else {
+
+      return "token-mock-useradmin";
     }
   }
 

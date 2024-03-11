@@ -21,6 +21,7 @@ export class UserDataBaseMock extends BaseDatabase {
   }
 
   public async getUserByEmail(email: string): Promise<UserDB | undefined> {
+
     return usersMock.find((user) => user.email === email);
   }
 
@@ -45,5 +46,4 @@ export class UserDataBaseMock extends BaseDatabase {
   
     return undefined;
   }
-  
-}
+

@@ -1,3 +1,4 @@
+
 import { HashManager } from "../../src/services/HashManager";
 
 export class HashManagerMock implements HashManager {
