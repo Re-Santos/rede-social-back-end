@@ -10,5 +10,4 @@ coverage/
 # Outros arquivos de configuração e logs
 *.log
 .env
-build
 .DS_Store
