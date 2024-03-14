@@ -47,3 +47,4 @@ export class UserDataBaseMock extends BaseDatabase {
     return undefined;
   }
 
+}
