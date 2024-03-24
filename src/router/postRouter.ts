@@ -19,8 +19,8 @@ const postsController = new PostsController(
 
 postRouter.get("/", validateToken, postsController.getPosts);
 postRouter.post("/", validateToken, postsController.createPost);
-postRouter.post("/:id", validateToken, postsController.createComment);
-postRouter.post("/likeOrDislike", postsController.likeOrDislike);
+// postRouter.post("/:id", validateToken, postsController.createComment);
+// postRouter.post("/likeOrDislike", postsController.likeOrDislike);
 
 
 
