@@ -36,29 +36,29 @@ export class PostsDatabase extends BaseDatabase {
         const [result]: PostsDB[] | undefined = await BaseDatabase.connection(PostsDatabase.TABLE_POSTS).select().where({id: id})
     return result
     }
-    public createComment = async(newCommentDB: CommentsDB) => {
-        await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).insert(newCommentDB)
-    }
-    public updatePost = async(newUpDatePostDB: PostsDB, id: string) => {
-        await BaseDatabase.connection(PostsDatabase.TABLE_POSTS).update(newUpDatePostDB).where({id: id})
-    }
-    public getCommentById = async (id: string): Promise <PostsDB | undefined> => {
-        const result: PostsDB[] | undefined = await BaseDatabase
-        .connection(PostsDatabase.TABLE_COMMENTS)
-        .select()
-        .where({post_id: id})
+    // public createComment = async(newCommentDB: CommentsDB) => {
+    //     await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).insert(newCommentDB)
+    // }
+    // public updatePost = async(newUpDatePostDB: PostsDB, id: string) => {
+    //     await BaseDatabase.connection(PostsDatabase.TABLE_POSTS).update(newUpDatePostDB).where({id: id})
+    // }
+    // public getCommentById = async (id: string): Promise <PostsDB | undefined> => {
+    //     const result: PostsDB[] | undefined = await BaseDatabase
+    //     .connection(PostsDatabase.TABLE_COMMENTS)
+    //     .select()
+    //     .where({post_id: id})
 
-        return result [0]
-    }
-    public updateLikeOrDislikePost = async (updateLike: PostsLikesDislikesDB) => {
-        await BaseDatabase
-        .connection(PostsDatabase.TABLE_POSTS_LIKEDISLIKE)
-        .insert(updateLike)
-    }
-    public updateComment = async(updateComment: PostsDB, id: string) => {
-        await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).update(updateComment).where({id: id})
-    }
-    public updateLikeOrDislikeComment = async(updateLikeComment: CommentsLikesDislikesDB) => {
-        await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS_LIKEDISLIKE).insert(updateLikeComment)
-    }
+    //     return result [0]
+    // }
+    // public updateLikeOrDislikePost = async (updateLike: PostsLikesDislikesDB) => {
+    //     await BaseDatabase
+    //     .connection(PostsDatabase.TABLE_POSTS_LIKEDISLIKE)
+    //     .insert(updateLike)
+    // }
+    // public updateComment = async(updateComment: PostsDB, id: string) => {
+    //     await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).update(updateComment).where({id: id})
+    // }
+    // public updateLikeOrDislikeComment = async(updateLikeComment: CommentsLikesDislikesDB) => {
+    //     await BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS_LIKEDISLIKE).insert(updateLikeComment)
+    // }
 }

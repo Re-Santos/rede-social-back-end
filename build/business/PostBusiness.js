@@ -87,160 +87,160 @@ class PostsBusiness {
                 }
             }
         });
-        // create comment
-        this.createComment = (input) => __awaiter(this, void 0, void 0, function* () {
-            const { post_id, comment, token } = input;
-            if (post_id !== "string") {
-                throw new BadRequestError_1.BadRequestError("'post_id' deve ser string");
-            }
-            if (comment === null) {
-                throw new BadRequestError_1.BadRequestError("'COMMENT' inválido");
-            }
-            if (typeof comment !== "string") {
-                throw new BadRequestError_1.BadRequestError("'COMMENT' deve ser uma string");
-            }
-            if (typeof post_id !== "string") {
-                throw new BadRequestError_1.BadRequestError("'post_id' deve ser uma string");
-            }
-            const payload = this.tokenManager.getPayload(token);
-            if (payload === null) {
-                throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
-            }
-            const postById = yield this.postsDatabase.getPostById(post_id);
-            if (!postById) {
-                throw new BadRequestError_1.BadRequestError("'POST' não encontrado");
-            }
-            const id = this.idGenerator.generate();
-            const content = "";
-            const likes = 0;
-            const dislikes = 0;
-            const created_at = new Date().toISOString();
-            const user_id = payload.id;
-            const newComment = new PostModel_1.Posts(id, content, comment, likes, dislikes, created_at, {
-                id: user_id,
-                name: payload.username
-            }, {
-                id: "",
-                post_id: "",
-                comment: "",
-                likes: 0,
-                dislikes: 0,
-                created_at: "",
-                user: {
-                    user_id: "",
-                    name: "",
-                }
-            });
-            const updatePost = new PostModel_1.Posts(postById.id, postById.content, postById.comment, postById.likes, postById.dislikes, postById.created_at, {
-                id: user_id,
-                name: payload.username
-            }, {
-                id: '',
-                post_id: '',
-                comment: '',
-                likes: 0,
-                dislikes: 0,
-                created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-                }
-            });
-            const newCommentDB = newComment.toModelsCommentDB();
-            yield this.postsDatabase.createComment(newCommentDB);
-            const newUpDatePostDB = updatePost.toPostModelsDB();
-            yield this.postsDatabase.updatePost(newUpDatePostDB, postById.id);
-        });
-        //likeOrDislike
-        this.likeOrDislike = (input) => __awaiter(this, void 0, void 0, function* () {
-            const { idToLikeOrDislike, token, like } = input;
-            if (token === undefined) {
-                throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
-            }
-            const payload = this.tokenManager.getPayload(token);
-            if (payload === null) {
-                throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
-            }
-            if (typeof like !== "boolean") {
-                throw new BadRequestError_1.BadRequestError("'LIKE' deve ser um boolean");
-            }
-            const postToLike = yield this.postsDatabase.getPostById(idToLikeOrDislike);
-            const commentToLike = yield this.postsDatabase.getCommentById(idToLikeOrDislike);
-            if (!postToLike) {
-                throw new BadRequestError_1.BadRequestError("'ID' não encontrado");
-            }
-            if (!commentToLike) {
-                throw new BadRequestError_1.BadRequestError("'ID' não encontrado");
-            }
-            if (postToLike) {
-                let like = postToLike.likes;
-                let dislike = postToLike.dislikes;
-                if (like === 0) {
-                    dislike++;
-                }
-                else if (like === 1) {
-                    like++;
-                }
-                else {
-                    throw new BadRequestError_1.BadRequestError("Você não pode realizar duas ações no mesmo post");
-                }
-            }
-            const postLike = new PostModel_1.Posts(idToLikeOrDislike, postToLike.content, postToLike.comment, postToLike.likes, postToLike.dislikes, postToLike.created_at, { id: postToLike.user_id,
-                name: payload.username }, { id: '',
-                post_id: '',
-                comment: '',
-                likes: 0,
-                dislikes: 0,
-                created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-                }
-            });
-            const userId = payload.id;
-            const likesSended = like ? 1 : 0;
-            const updateLikePost = {
-                user_id: userId,
-                post_id: idToLikeOrDislike,
-                like: likesSended,
-            };
-            const postLikeDB = postLike.toPostModelsDB();
-            yield this.postsDatabase.updatePost(postLikeDB, idToLikeOrDislike);
-            yield this.postsDatabase.updateLikeOrDislikePost(updateLikePost);
-            if (commentToLike) {
-                let like = commentToLike.likes;
-                let dislike = commentToLike.dislikes;
-                if (like === 0) {
-                    dislike++;
-                }
-                else if (like === 1) {
-                    like++;
-                }
-                else {
-                    throw new BadRequestError_1.BadRequestError("Você não pode realizar duas ações no mesmo post");
-                }
-            }
-            const commentLike = new PostModel_1.Posts(idToLikeOrDislike, commentToLike.content, commentToLike.comment, commentToLike.likes, commentToLike.dislikes, commentToLike.created_at, { id: commentToLike.user_id,
-                name: payload.username }, { id: '',
-                post_id: '',
-                comment: '',
-                likes: 0,
-                dislikes: 0,
-                created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-                }
-            });
-            const updateLikeComment = {
-                user_id: userId,
-                comment_id: idToLikeOrDislike,
-                like: likesSended,
-            };
-            const commentLikeDB = commentLike.toPostModelsDB();
-            yield this.postsDatabase.updateComment(commentLikeDB, idToLikeOrDislike);
-            yield this.postsDatabase.updateLikeOrDislikeComment(updateLikeComment);
-        });
+        // // create comment
+        // this.createComment = (input) => __awaiter(this, void 0, void 0, function* () {
+        //     const { post_id, comment, token } = input;
+        //     if (post_id !== "string") {
+        //         throw new BadRequestError_1.BadRequestError("'post_id' deve ser string");
+        //     }
+        //     if (comment === null) {
+        //         throw new BadRequestError_1.BadRequestError("'COMMENT' inválido");
+        //     }
+        //     if (typeof comment !== "string") {
+        //         throw new BadRequestError_1.BadRequestError("'COMMENT' deve ser uma string");
+        //     }
+        //     if (typeof post_id !== "string") {
+        //         throw new BadRequestError_1.BadRequestError("'post_id' deve ser uma string");
+        //     }
+        //     const payload = this.tokenManager.getPayload(token);
+        //     if (payload === null) {
+        //         throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
+        //     }
+        //     const postById = yield this.postsDatabase.getPostById(post_id);
+        //     if (!postById) {
+        //         throw new BadRequestError_1.BadRequestError("'POST' não encontrado");
+        //     }
+        //     const id = this.idGenerator.generate();
+        //     const content = "";
+        //     const likes = 0;
+        //     const dislikes = 0;
+        //     const created_at = new Date().toISOString();
+        //     const user_id = payload.id;
+        //     const newComment = new PostModel_1.Posts(id, content, comment, likes, dislikes, created_at, {
+        //         id: user_id,
+        //         name: payload.username
+        //     }, {
+        //         id: "",
+        //         post_id: "",
+        //         comment: "",
+        //         likes: 0,
+        //         dislikes: 0,
+        //         created_at: "",
+        //         user: {
+        //             user_id: "",
+        //             name: "",
+        //         }
+        //     });
+        //     const updatePost = new PostModel_1.Posts(postById.id, postById.content, postById.comment, postById.likes, postById.dislikes, postById.created_at, {
+        //         id: user_id,
+        //         name: payload.username
+        //     }, {
+        //         id: '',
+        //         post_id: '',
+        //         comment: '',
+        //         likes: 0,
+        //         dislikes: 0,
+        //         created_at: '',
+        //         user: {
+        //             user_id: '',
+        //             name: ''
+        //         }
+        //     });
+        //     const newCommentDB = newComment.toModelsCommentDB();
+        //     yield this.postsDatabase.createComment(newCommentDB);
+        //     const newUpDatePostDB = updatePost.toPostModelsDB();
+        //     yield this.postsDatabase.updatePost(newUpDatePostDB, postById.id);
+        // });
+        // //likeOrDislike
+        // this.likeOrDislike = (input) => __awaiter(this, void 0, void 0, function* () {
+        //     const { idToLikeOrDislike, token, like } = input;
+        //     if (token === undefined) {
+        //         throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
+        //     }
+        //     const payload = this.tokenManager.getPayload(token);
+        //     if (payload === null) {
+        //         throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
+        //     }
+        //     if (typeof like !== "boolean") {
+        //         throw new BadRequestError_1.BadRequestError("'LIKE' deve ser um boolean");
+        //     }
+        //     const postToLike = yield this.postsDatabase.getPostById(idToLikeOrDislike);
+        //     const commentToLike = yield this.postsDatabase.getCommentById(idToLikeOrDislike);
+        //     if (!postToLike) {
+        //         throw new BadRequestError_1.BadRequestError("'ID' não encontrado");
+        //     }
+        //     if (!commentToLike) {
+        //         throw new BadRequestError_1.BadRequestError("'ID' não encontrado");
+        //     }
+        //     if (postToLike) {
+        //         let like = postToLike.likes;
+        //         let dislike = postToLike.dislikes;
+        //         if (like === 0) {
+        //             dislike++;
+        //         }
+        //         else if (like === 1) {
+        //             like++;
+        //         }
+        //         else {
+        //             throw new BadRequestError_1.BadRequestError("Você não pode realizar duas ações no mesmo post");
+        //         }
+        //     }
+        //     const postLike = new PostModel_1.Posts(idToLikeOrDislike, postToLike.content, postToLike.comment, postToLike.likes, postToLike.dislikes, postToLike.created_at, { id: postToLike.user_id,
+        //         name: payload.username }, { id: '',
+        //         post_id: '',
+        //         comment: '',
+        //         likes: 0,
+        //         dislikes: 0,
+        //         created_at: '',
+        //         user: {
+        //             user_id: '',
+        //             name: ''
+        //         }
+        //     });
+        //     const userId = payload.id;
+        //     const likesSended = like ? 1 : 0;
+        //     const updateLikePost = {
+        //         user_id: userId,
+        //         post_id: idToLikeOrDislike,
+        //         like: likesSended,
+        //     };
+        //     const postLikeDB = postLike.toPostModelsDB();
+        //     yield this.postsDatabase.updatePost(postLikeDB, idToLikeOrDislike);
+        //     yield this.postsDatabase.updateLikeOrDislikePost(updateLikePost);
+        //     if (commentToLike) {
+        //         let like = commentToLike.likes;
+        //         let dislike = commentToLike.dislikes;
+        //         if (like === 0) {
+        //             dislike++;
+        //         }
+        //         else if (like === 1) {
+        //             like++;
+        //         }
+        //         else {
+        //             throw new BadRequestError_1.BadRequestError("Você não pode realizar duas ações no mesmo post");
+        //         }
+        //     }
+        //     const commentLike = new PostModel_1.Posts(idToLikeOrDislike, commentToLike.content, commentToLike.comment, commentToLike.likes, commentToLike.dislikes, commentToLike.created_at, { id: commentToLike.user_id,
+        //         name: payload.username }, { id: '',
+        //         post_id: '',
+        //         comment: '',
+        //         likes: 0,
+        //         dislikes: 0,
+        //         created_at: '',
+        //         user: {
+        //             user_id: '',
+        //             name: ''
+        //         }
+        //     });
+        //     const updateLikeComment = {
+        //         user_id: userId,
+        //         comment_id: idToLikeOrDislike,
+        //         like: likesSended,
+        //     };
+        //     const commentLikeDB = commentLike.toPostModelsDB();
+        //     yield this.postsDatabase.updateComment(commentLikeDB, idToLikeOrDislike);
+        //     yield this.postsDatabase.updateLikeOrDislikeComment(updateLikeComment);
+        // });
     }
 }
 exports.PostsBusiness = PostsBusiness;

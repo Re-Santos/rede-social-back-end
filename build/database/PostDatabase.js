@@ -41,30 +41,30 @@ class PostsDatabase extends BaseDatabase_1.BaseDatabase {
             const [result] = yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_POSTS).select().where({ id: id });
             return result;
         });
-        this.createComment = (newCommentDB) => __awaiter(this, void 0, void 0, function* () {
-            yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).insert(newCommentDB);
-        });
-        this.updatePost = (newUpDatePostDB, id) => __awaiter(this, void 0, void 0, function* () {
-            yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_POSTS).update(newUpDatePostDB).where({ id: id });
-        });
-        this.getCommentById = (id) => __awaiter(this, void 0, void 0, function* () {
-            const result = yield BaseDatabase_1.BaseDatabase
-                .connection(PostsDatabase.TABLE_COMMENTS)
-                .select()
-                .where({ post_id: id });
-            return result[0];
-        });
-        this.updateLikeOrDislikePost = (updateLike) => __awaiter(this, void 0, void 0, function* () {
-            yield BaseDatabase_1.BaseDatabase
-                .connection(PostsDatabase.TABLE_POSTS_LIKEDISLIKE)
-                .insert(updateLike);
-        });
-        this.updateComment = (updateComment, id) => __awaiter(this, void 0, void 0, function* () {
-            yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).update(updateComment).where({ id: id });
-        });
-        this.updateLikeOrDislikeComment = (updateLikeComment) => __awaiter(this, void 0, void 0, function* () {
-            yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS_LIKEDISLIKE).insert(updateLikeComment);
-        });
+        // this.createComment = (newCommentDB) => __awaiter(this, void 0, void 0, function* () {
+        //     yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).insert(newCommentDB);
+        // });
+        // this.updatePost = (newUpDatePostDB, id) => __awaiter(this, void 0, void 0, function* () {
+        //     yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_POSTS).update(newUpDatePostDB).where({ id: id });
+        // });
+        // this.getCommentById = (id) => __awaiter(this, void 0, void 0, function* () {
+        //     const result = yield BaseDatabase_1.BaseDatabase
+        //         .connection(PostsDatabase.TABLE_COMMENTS)
+        //         .select()
+        //         .where({ post_id: id });
+        //     return result[0];
+        // });
+        // this.updateLikeOrDislikePost = (updateLike) => __awaiter(this, void 0, void 0, function* () {
+        //     yield BaseDatabase_1.BaseDatabase
+        //         .connection(PostsDatabase.TABLE_POSTS_LIKEDISLIKE)
+        //         .insert(updateLike);
+        // });
+        // this.updateComment = (updateComment, id) => __awaiter(this, void 0, void 0, function* () {
+        //     yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS).update(updateComment).where({ id: id });
+        // });
+        // this.updateLikeOrDislikeComment = (updateLikeComment) => __awaiter(this, void 0, void 0, function* () {
+        //     yield BaseDatabase_1.BaseDatabase.connection(PostsDatabase.TABLE_COMMENTS_LIKEDISLIKE).insert(updateLikeComment);
+        // });
     }
 }
 exports.PostsDatabase = PostsDatabase;

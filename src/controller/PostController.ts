@@ -49,43 +49,43 @@ export class PostsController {
             }
         }
     }
-    public createComment = async (req: Request, res: Response) => {
-        try {
-            const input: createCommentInput = {
-                post_id: String(req.body.post_id),
-                comment: req.body.comment,
-                token: req.headers.authorization as string,
-            };
+    // public createComment = async (req: Request, res: Response) => {
+    //     try {
+    //         const input: createCommentInput = {
+    //             post_id: String(req.body.post_id),
+    //             comment: req.body.comment,
+    //             token: req.headers.authorization as string,
+    //         };
 
-            const output = await this.PostsBusiness.createComment(input)
-            res.status(201).send(output)
-        } catch (error) {
-            console.log(error)
+    //         const output = await this.PostsBusiness.createComment(input)
+    //         res.status(201).send(output)
+    //     } catch (error) {
+    //         console.log(error)
     
-            if (error instanceof BaseError) {
-                res.status(error.statusCode).send(error.message)
-            } else {
-                res.status(500).send("Erro Inesperado")
-            }
-        }
-    }
-    public likeOrDislike = async (req: Request, res: Response) => {
-        try {
-            const input: LikeOrDislikeInput = {
-                idToLikeOrDislike: req.params.id,
-                token: req.headers.authorization,
-                like: req.body.like
-            }
-            await this.PostsBusiness.likeOrDislike(input)
-            res.status(200).end()
-        } catch (error) {
-            console.log(error)
+    //         if (error instanceof BaseError) {
+    //             res.status(error.statusCode).send(error.message)
+    //         } else {
+    //             res.status(500).send("Erro Inesperado")
+    //         }
+    //     }
+    // }
+    // public likeOrDislike = async (req: Request, res: Response) => {
+    //     try {
+    //         const input: LikeOrDislikeInput = {
+    //             idToLikeOrDislike: req.params.id,
+    //             token: req.headers.authorization,
+    //             like: req.body.like
+    //         }
+    //         await this.PostsBusiness.likeOrDislike(input)
+    //         res.status(200).end()
+    //     } catch (error) {
+    //         console.log(error)
 
-            if (error instanceof BaseError) {
-                res.status(error.statusCode).send(error.message)
-            } else {
-                res.status(500).send("Erro Inesperado")
-            }
-        }
-    }
+    //         if (error instanceof BaseError) {
+    //             res.status(error.statusCode).send(error.message)
+    //         } else {
+    //             res.status(500).send("Erro Inesperado")
+    //         }
+    //     }
+    // }
 }
