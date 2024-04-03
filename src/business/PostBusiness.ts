@@ -61,91 +61,51 @@ export class PostsBusiness {
         return posts;
     }
     
-     
     public createPost = async (input: CreatePostInput): Promise<void> => {
         try {
             const { token, content } = input;
-
-            if (!token || typeof token !== 'string') {
-                throw new BadRequestError("'TOKEN' deve ser string");
-            }
     
+            if (!token || typeof token !== 'string') {
+                throw new BadRequestError("'TOKEN' deve ser uma string válida");
+            }
+        
             if (content === null || typeof content !== 'string') {
                 throw new BadRequestError("'CONTENT' inválido");
             }
-    
+        
             const payload = this.tokenManager.getPayload(token);
-    
-            if (payload === null) {
-                throw new BadRequestError("'TOKEN' inválido");
+        
+            if (!payload) {
+                throw new UnauthorizedError("'TOKEN' inválido");
             }
-    
+        
             const id = this.idGenerator.generate();
             const created_at = new Date().toISOString();
             const user_id = payload.id;
-    
-            // const newPost = new Posts(
-            //     id,
-            //     content,
-            //     "",
-            //     0,
-            //     0,
-            //     created_at,
-            //     {
-            //         id: user_id,
-            //         name: payload.username,
-            //     },
-            //     {
-            //         id: '',
-            //         post_id: '',
-            //         comment: '',
-            //         likes: 0,
-            //         dislikes: 0,
-            //         created_at: '',
-            //         user: {
-            //             user_id: '',
-            //             name: '',
-            //         },
-            //     }
-            // );
+        
             const newPost = new Posts(
                 id,
                 content,
-                "",
-                0,
-                0,
+                '', // comment
+                0, // likes
+                0, // dislikes
                 created_at,
-                {
-                    id: user_id,
-                    name: payload.username,
-                },
-                {
-                    id: '', 
-                    post_id: '', 
-                    comment: '',
-                    likes: 0, 
-                    dislikes: 0, 
-                    created_at: '', 
-                    user: {
-                        user_id: '', 
-                        name: '', 
-                    },
-                }
+                { id: user_id, name: '' }, // user
+                { id: '', post_id: '', comment: '', likes: 0, dislikes: 0, created_at: '', user: { user_id: '', name: '' } } // post_comment
             );
-
-            const postsDB = newPost.toPostModelsDB();
-    
-            await this.postsDatabase.insertPost(postsDB);
+        
+            await this.postsDatabase.insertPost(newPost.toPostDB());
         } catch (error) {
-            if (error instanceof BadRequestError) {
-                throw error; 
+            if (error instanceof BadRequestError || error instanceof UnauthorizedError) {
+                throw error;
             } else {
-            
                 console.error(error);
                 throw new InternalServerError("Erro interno inesperado");
             }
         }
     };
+    
+    
     
     // create comment
 
