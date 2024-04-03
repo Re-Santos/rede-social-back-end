@@ -53,46 +53,6 @@ class PostsController {
                 }
             }
         });
-        // this.createComment = (req, res) => __awaiter(this, void 0, void 0, function* () {
-        //     try {
-        //         const input = {
-        //             post_id: String(req.body.post_id),
-        //             comment: req.body.comment,
-        //             token: req.headers.authorization,
-        //         };
-        //         const output = yield this.PostsBusiness.createComment(input);
-        //         res.status(201).send(output);
-        //     }
-        //     catch (error) {
-        //         console.log(error);
-        //         if (error instanceof BaseError_1.BaseError) {
-        //             res.status(error.statusCode).send(error.message);
-        //         }
-        //         else {
-        //             res.status(500).send("Erro Inesperado");
-        //         }
-        //     }
-        // });
-        // this.likeOrDislike = (req, res) => __awaiter(this, void 0, void 0, function* () {
-        //     try {
-        //         const input = {
-        //             idToLikeOrDislike: req.params.id,
-        //             token: req.headers.authorization,
-        //             like: req.body.like
-        //         };
-        //         yield this.PostsBusiness.likeOrDislike(input);
-        //         res.status(200).end();
-        //     }
-        //     catch (error) {
-        //         console.log(error);
-        //         if (error instanceof BaseError_1.BaseError) {
-        //             res.status(error.statusCode).send(error.message);
-        //         }
-        //         else {
-        //             res.status(500).send("Erro Inesperado");
-        //         }
-        //     }
-        // });
     }
 }
 exports.PostsController = PostsController;
