@@ -64,48 +64,63 @@ export class PostsBusiness {
     public createPost = async (input: CreatePostInput): Promise<void> => {
         try {
             const { token, content } = input;
-    
+
             if (!token || typeof token !== 'string') {
-                throw new BadRequestError("'TOKEN' deve ser uma string válida");
+                throw new BadRequestError("'TOKEN' deve ser string");
             }
-        
+    
             if (content === null || typeof content !== 'string') {
                 throw new BadRequestError("'CONTENT' inválido");
             }
-        
+    
             const payload = this.tokenManager.getPayload(token);
-        
-            if (!payload) {
-                throw new UnauthorizedError("'TOKEN' inválido");
+    
+            if (payload === null) {
+                throw new BadRequestError("'TOKEN' inválido");
             }
-        
+    
             const id = this.idGenerator.generate();
             const created_at = new Date().toISOString();
             const user_id = payload.id;
-        
+    
             const newPost = new Posts(
                 id,
                 content,
-                '', // comment
-                0, // likes
-                0, // dislikes
+                "",
+                0,
+                0,
                 created_at,
-                { id: user_id, name: '' }, // user
-                { id: '', post_id: '', comment: '', likes: 0, dislikes: 0, created_at: '', user: { user_id: '', name: '' } } // post_comment
+                {
+                    id: user_id,
+                    name: payload.username,
+                },
+                {
+                    id: '',
+                    post_id: '',
+                    comment: '',
+                    likes: 0,
+                    dislikes: 0,
+                    created_at: '',
+                    user: {
+                        user_id: '',
+                        name: '',
+                    },
+                }
             );
-        
-            await this.postsDatabase.insertPost(newPost.toPostDB());
+    
+            const postsDB = newPost.toPostModelsDB();
+    
+            await this.postsDatabase.insertPost(postsDB);
         } catch (error) {
-            if (error instanceof BadRequestError || error instanceof UnauthorizedError) {
-                throw error;
+            if (error instanceof BadRequestError) {
+                throw error; 
             } else {
+            
                 console.error(error);
                 throw new InternalServerError("Erro interno inesperado");
             }
         }
     };
-    
-    
     
     // create comment
 
