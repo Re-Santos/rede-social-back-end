@@ -102,4 +102,16 @@ export class Posts {
             createdAt: this.createdAt,
         }
     }
+
+    public toPostDB(): PostsDB {
+        return {
+            id: this.id,
+            user_id: this.user.id,
+            content: this.content,
+            comment: this.comment,
+            likes: this.likes,
+            dislikes: this.dislikes,
+            created_at: this.createdAt,
+        };
+    }
 }

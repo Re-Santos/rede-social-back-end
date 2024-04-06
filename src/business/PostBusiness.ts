@@ -61,7 +61,6 @@ export class PostsBusiness {
         return posts;
     }
     
-     
     public createPost = async (input: CreatePostInput): Promise<void> => {
         try {
             const { token, content } = input;
@@ -84,30 +83,6 @@ export class PostsBusiness {
             const created_at = new Date().toISOString();
             const user_id = payload.id;
     
-            // const newPost = new Posts(
-            //     id,
-            //     content,
-            //     "",
-            //     0,
-            //     0,
-            //     created_at,
-            //     {
-            //         id: user_id,
-            //         name: payload.username,
-            //     },
-            //     {
-            //         id: '',
-            //         post_id: '',
-            //         comment: '',
-            //         likes: 0,
-            //         dislikes: 0,
-            //         created_at: '',
-            //         user: {
-            //             user_id: '',
-            //             name: '',
-            //         },
-            //     }
-            // );
             const newPost = new Posts(
                 id,
                 content,
@@ -120,19 +95,19 @@ export class PostsBusiness {
                     name: payload.username,
                 },
                 {
-                    id: '', 
-                    post_id: '', 
+                    id: '',
+                    post_id: '',
                     comment: '',
-                    likes: 0, 
-                    dislikes: 0, 
-                    created_at: '', 
+                    likes: 0,
+                    dislikes: 0,
+                    created_at: '',
                     user: {
-                        user_id: '', 
-                        name: '', 
+                        user_id: '',
+                        name: '',
                     },
                 }
             );
-
+    
             const postsDB = newPost.toPostModelsDB();
     
             await this.postsDatabase.insertPost(postsDB);
