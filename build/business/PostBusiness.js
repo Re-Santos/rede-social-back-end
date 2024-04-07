@@ -47,7 +47,7 @@ class PostsBusiness {
             try {
                 const { token, content } = input;
                 if (!token || typeof token !== 'string') {
-                    throw new BadRequestError_1.BadRequestError("'TOKEN' deve ser string");
+                    throw new BadRequestError_1.BadRequestError("'TOKEN' deve ser uma string");
                 }
                 if (content === null || typeof content !== 'string') {
                     throw new BadRequestError_1.BadRequestError("'CONTENT' inválido");
