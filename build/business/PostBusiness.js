@@ -47,28 +47,38 @@ class PostsBusiness {
             try {
                 const { token, content } = input;
                 if (!token || typeof token !== 'string') {
-                    throw new BadRequestError_1.BadRequestError("'TOKEN' deve ser uma string válida");
+                    throw new BadRequestError_1.BadRequestError("'TOKEN' deve ser uma string");
                 }
                 if (content === null || typeof content !== 'string') {
                     throw new BadRequestError_1.BadRequestError("'CONTENT' inválido");
                 }
                 const payload = this.tokenManager.getPayload(token);
-                if (!payload) {
-                    throw new UnauthorizedError_1.UnauthorizedError("'TOKEN' inválido");
+                if (payload === null) {
+                    throw new BadRequestError_1.BadRequestError("'TOKEN' inválido");
                 }
                 const id = this.idGenerator.generate();
                 const created_at = new Date().toISOString();
                 const user_id = payload.id;
-                const newPost = new PostModel_1.Posts(id, content, '', // comment
-                0, // likes
-                0, // dislikes
-                created_at, { id: user_id, name: '' }, // user
-                { id: '', post_id: '', comment: '', likes: 0, dislikes: 0, created_at: '', user: { user_id: '', name: '' } } // post_comment
-                );
-                yield this.postsDatabase.insertPost(newPost.toPostDB());
+                const newPost = new PostModel_1.Posts(id, content, "", 0, 0, created_at, {
+                    id: user_id,
+                    name: payload.username,
+                }, {
+                    id: '',
+                    post_id: '',
+                    comment: '',
+                    likes: 0,
+                    dislikes: 0,
+                    created_at: '',
+                    user: {
+                        user_id: '',
+                        name: '',
+                    },
+                });
+                const postsDB = newPost.toPostModelsDB();
+                yield this.postsDatabase.insertPost(postsDB);
             }
             catch (error) {
-                if (error instanceof BadRequestError_1.BadRequestError || error instanceof UnauthorizedError_1.UnauthorizedError) {
+                if (error instanceof BadRequestError_1.BadRequestError) {
                     throw error;
                 }
                 else {
