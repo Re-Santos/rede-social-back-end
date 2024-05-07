@@ -1,20 +1,26 @@
 import { Request, Response, NextFunction } from 'express';
 
 export function validateToken(req: Request, res: Response, next: NextFunction) {
+    // Debug: Log de todos os cabeçalhos recebidos
+    console.log('Received headers:', req.headers);
+
     const authorizationHeader = req.headers.authorization;
 
     if (!authorizationHeader) {
-        return res.status(401).json({ error: 'Authorization missing' });
+        console.error('Authorization header missing.');
+        return res.status(401).json({ error: 'Authorization header missing' });
     }
 
     if (!authorizationHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ error: 'Invalid token' });
+        console.error('Incorrect authorization format. Bearer token expected.');
+        return res.status(401).json({ error: 'Authorization must start with Bearer' });
     }
 
     const token = authorizationHeader.split(' ')[1];
 
     if (!token) {
-        return res.status(401).json({ error: 'Invalid or missing token' });
+        console.error('Token is missing after Bearer.');
+        return res.status(401).json({ error: 'Token is missing after Bearer' });
     }
 
     next();
