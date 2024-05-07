@@ -15,5 +15,5 @@ exports.postRouter = express_1.default.Router();
 const postsController = new PostController_1.PostsController(new PostBusiness_1.PostsBusiness(new PostDatabase_1.PostsDatabase(), new IdGenerator_1.IdGenerator(), new TokenManager_1.TokenManager()));
 exports.postRouter.get("/", validateToken_1.validateToken, postsController.getPosts);
 exports.postRouter.post("/", validateToken_1.validateToken, postsController.createPost);
-exports.postRouter.post("/:id", validateToken_1.validateToken, postsController.createComment);
-exports.postRouter.post("/likeOrDislike", postsController.likeOrDislike);
+// postRouter.post("/:id", validateToken, postsController.createComment);
+// postRouter.post("/likeOrDislike", postsController.likeOrDislike);

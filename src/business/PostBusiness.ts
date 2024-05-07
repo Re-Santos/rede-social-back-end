@@ -61,7 +61,6 @@ export class PostsBusiness {
         return posts;
     }
     
-     
     public createPost = async (input: CreatePostInput): Promise<void> => {
         try {
             const { token, content } = input;
@@ -125,212 +124,212 @@ export class PostsBusiness {
     
     // create comment
 
-    public createComment = async (input: createCommentInput): Promise<void> => {
-        const { post_id, comment, token } = input
+    // public createComment = async (input: createCommentInput): Promise<void> => {
+    //     const { post_id, comment, token } = input
 
-        if (post_id !== "string") {
-            throw new BadRequestError("'post_id' deve ser string")
-        }
-        if (comment === null) {
-            throw new BadRequestError("'COMMENT' inválido")
-        }
-        if (typeof comment !== "string") {
-            throw new BadRequestError("'COMMENT' deve ser uma string")
-        }
-        if (typeof post_id !== "string") {
-            throw new BadRequestError("'post_id' deve ser uma string")
-        }
-        const payload = this.tokenManager.getPayload(token)
-        if (payload === null) {
-            throw new BadRequestError("'TOKEN' inválido")
-        }
-        const postById = await this.postsDatabase.getPostById(post_id)
-        if (!postById) {
-            throw new BadRequestError("'POST' não encontrado")
-        }
+    //     if (post_id !== "string") {
+    //         throw new BadRequestError("'post_id' deve ser string")
+    //     }
+    //     if (comment === null) {
+    //         throw new BadRequestError("'COMMENT' inválido")
+    //     }
+    //     if (typeof comment !== "string") {
+    //         throw new BadRequestError("'COMMENT' deve ser uma string")
+    //     }
+    //     if (typeof post_id !== "string") {
+    //         throw new BadRequestError("'post_id' deve ser uma string")
+    //     }
+    //     const payload = this.tokenManager.getPayload(token)
+    //     if (payload === null) {
+    //         throw new BadRequestError("'TOKEN' inválido")
+    //     }
+    //     const postById = await this.postsDatabase.getPostById(post_id)
+    //     if (!postById) {
+    //         throw new BadRequestError("'POST' não encontrado")
+    //     }
 
-        const id = this.idGenerator.generate()
-        const content = ""
-        const likes = 0
-        const dislikes = 0
-        const created_at = new Date().toISOString()
-        const user_id = payload.id
+    //     const id = this.idGenerator.generate()
+    //     const content = ""
+    //     const likes = 0
+    //     const dislikes = 0
+    //     const created_at = new Date().toISOString()
+    //     const user_id = payload.id
 
-        const newComment = new Posts(
-            id,
-            content,
-            comment,
-            likes,
-            dislikes,
-            created_at,
-            {
-                id: user_id,
-                name: payload.username
-            },
-            {
-                id: "",
-                post_id: "",
-                comment: "",
-                likes: 0,
-                dislikes: 0,
-                created_at: "",
-                user: {
-                    user_id: "",
-                    name: "",
-                }
-            }
+    //     const newComment = new Posts(
+    //         id,
+    //         content,
+    //         comment,
+    //         likes,
+    //         dislikes,
+    //         created_at,
+    //         {
+    //             id: user_id,
+    //             name: payload.username
+    //         },
+    //         {
+    //             id: "",
+    //             post_id: "",
+    //             comment: "",
+    //             likes: 0,
+    //             dislikes: 0,
+    //             created_at: "",
+    //             user: {
+    //                 user_id: "",
+    //                 name: "",
+    //             }
+    //         }
 
-        )
-        const updatePost = new Posts(
-            postById.id,
-            postById.content,
-            postById.comment,
-            postById.likes,
-            postById.dislikes,
-            postById.created_at,
-            {
-                id: user_id,
-                name: payload.username
-            },
-            {
-                id: '',
-                post_id: '',
-                comment: '',
-                likes: 0,
-                dislikes: 0,
-                created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-                }
-            }
-        )
-        const newCommentDB = newComment.toModelsCommentDB()
-        await this.postsDatabase.createComment(newCommentDB)
+    //     )
+    //     const updatePost = new Posts(
+    //         postById.id,
+    //         postById.content,
+    //         postById.comment,
+    //         postById.likes,
+    //         postById.dislikes,
+    //         postById.created_at,
+    //         {
+    //             id: user_id,
+    //             name: payload.username
+    //         },
+    //         {
+    //             id: '',
+    //             post_id: '',
+    //             comment: '',
+    //             likes: 0,
+    //             dislikes: 0,
+    //             created_at: '',
+    //             user: {
+    //                 user_id: '',
+    //                 name: ''
+    //             }
+    //         }
+    //     )
+    //     const newCommentDB = newComment.toModelsCommentDB()
+    //     await this.postsDatabase.createComment(newCommentDB)
 
-        const newUpDatePostDB = updatePost.toPostModelsDB()
-        await this.postsDatabase.updatePost(newUpDatePostDB, postById.id)
-    }
+    //     const newUpDatePostDB = updatePost.toPostModelsDB()
+    //     await this.postsDatabase.updatePost(newUpDatePostDB, postById.id)
+    // }
 
-    //likeOrDislike
+    // //likeOrDislike
 
-    public likeOrDislike = async(input: LikeOrDislikeInput): Promise<void> => {
-        const { idToLikeOrDislike, token, like} = input
-        if (token === undefined) {
-            throw new BadRequestError("'TOKEN' inválido")
-        }
+    // public likeOrDislike = async(input: LikeOrDislikeInput): Promise<void> => {
+    //     const { idToLikeOrDislike, token, like} = input
+    //     if (token === undefined) {
+    //         throw new BadRequestError("'TOKEN' inválido")
+    //     }
    
-        const payload = this.tokenManager.getPayload(token)
+    //     const payload = this.tokenManager.getPayload(token)
    
-        if (payload === null) {
-            throw new BadRequestError("'TOKEN' inválido")
-        }
+    //     if (payload === null) {
+    //         throw new BadRequestError("'TOKEN' inválido")
+    //     }
    
-        if (typeof like !== "boolean") {
-            throw new BadRequestError("'LIKE' deve ser um boolean")
-        }
+    //     if (typeof like !== "boolean") {
+    //         throw new BadRequestError("'LIKE' deve ser um boolean")
+    //     }
     
-        const postToLike = await this.postsDatabase.getPostById(idToLikeOrDislike)
-        const commentToLike = await this.postsDatabase.getCommentById(idToLikeOrDislike)
+    //     const postToLike = await this.postsDatabase.getPostById(idToLikeOrDislike)
+    //     const commentToLike = await this.postsDatabase.getCommentById(idToLikeOrDislike)
 
-        if(!postToLike){
-            throw new BadRequestError("'ID' não encontrado")
-        }
+    //     if(!postToLike){
+    //         throw new BadRequestError("'ID' não encontrado")
+    //     }
 
-        if(!commentToLike){
-            throw new BadRequestError("'ID' não encontrado")
-        }
-        if(postToLike){
-            let like = postToLike.likes
-            let dislike = postToLike.dislikes
+    //     if(!commentToLike){
+    //         throw new BadRequestError("'ID' não encontrado")
+    //     }
+    //     if(postToLike){
+    //         let like = postToLike.likes
+    //         let dislike = postToLike.dislikes
 
-            if(like === 0){
-                dislike++
-            }else if(like === 1){
-                like++
-            }else{
-                throw new BadRequestError("Você não pode realizar duas ações no mesmo post")
-            }
+    //         if(like === 0){
+    //             dislike++
+    //         }else if(like === 1){
+    //             like++
+    //         }else{
+    //             throw new BadRequestError("Você não pode realizar duas ações no mesmo post")
+    //         }
             
-        }
-        const postLike = new Posts (
-            idToLikeOrDislike, 
-            postToLike.content,
-            postToLike.comment,
-            postToLike.likes,
-            postToLike.dislikes,
-            postToLike.created_at,
-            {id: postToLike.user_id,
-            name:payload.username},
-            {id: '',
-            post_id: '',
-            comment: '',
-            likes: 0,
-            dislikes: 0,
-            created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-            }
-            }
-        )
+    //     }
+    //     const postLike = new Posts (
+    //         idToLikeOrDislike, 
+    //         postToLike.content,
+    //         postToLike.comment,
+    //         postToLike.likes,
+    //         postToLike.dislikes,
+    //         postToLike.created_at,
+    //         {id: postToLike.user_id,
+    //         name:payload.username},
+    //         {id: '',
+    //         post_id: '',
+    //         comment: '',
+    //         likes: 0,
+    //         dislikes: 0,
+    //         created_at: '',
+    //             user: {
+    //                 user_id: '',
+    //                 name: ''
+    //         }
+    //         }
+    //     )
 
-        const userId = payload.id
-        const likesSended = like ? 1 : 0 
+    //     const userId = payload.id
+    //     const likesSended = like ? 1 : 0 
 
-        const updateLikePost = {
-            user_id: userId,
-            post_id: idToLikeOrDislike,
-            like: likesSended,
-        }
+    //     const updateLikePost = {
+    //         user_id: userId,
+    //         post_id: idToLikeOrDislike,
+    //         like: likesSended,
+    //     }
 
-        const postLikeDB = postLike.toPostModelsDB()
-        await this.postsDatabase.updatePost(postLikeDB, idToLikeOrDislike)
-        await this.postsDatabase.updateLikeOrDislikePost(updateLikePost)
+    //     const postLikeDB = postLike.toPostModelsDB()
+    //     await this.postsDatabase.updatePost(postLikeDB, idToLikeOrDislike)
+    //     await this.postsDatabase.updateLikeOrDislikePost(updateLikePost)
 
-        if(commentToLike){
-            let like = commentToLike.likes
-            let dislike = commentToLike.dislikes
+    //     if(commentToLike){
+    //         let like = commentToLike.likes
+    //         let dislike = commentToLike.dislikes
 
-            if(like === 0){
-                dislike++
-            }else if(like === 1){
-                like++
-            }else{
-                throw new BadRequestError("Você não pode realizar duas ações no mesmo post")
-            }
+    //         if(like === 0){
+    //             dislike++
+    //         }else if(like === 1){
+    //             like++
+    //         }else{
+    //             throw new BadRequestError("Você não pode realizar duas ações no mesmo post")
+    //         }
             
-        }
+    //     }
 
-        const commentLike = new Posts (
-            idToLikeOrDislike, 
-            commentToLike.content,
-            commentToLike.comment,
-            commentToLike.likes,
-            commentToLike.dislikes,
-            commentToLike.created_at,
-            {id: commentToLike.user_id,
-            name:payload.username},
-            {id: '',
-            post_id: '',
-            comment: '',
-            likes: 0,
-            dislikes: 0,
-            created_at: '',
-                user: {
-                    user_id: '',
-                    name: ''
-            }
-            }
-        )
-        const updateLikeComment = {
-            user_id: userId,
-            comment_id: idToLikeOrDislike,
-            like: likesSended,
-        }
-        const commentLikeDB = commentLike.toPostModelsDB()
-        await this.postsDatabase.updateComment(commentLikeDB, idToLikeOrDislike)
-        await this.postsDatabase.updateLikeOrDislikeComment(updateLikeComment)
-    }
+    //     const commentLike = new Posts (
+    //         idToLikeOrDislike, 
+    //         commentToLike.content,
+    //         commentToLike.comment,
+    //         commentToLike.likes,
+    //         commentToLike.dislikes,
+    //         commentToLike.created_at,
+    //         {id: commentToLike.user_id,
+    //         name:payload.username},
+    //         {id: '',
+    //         post_id: '',
+    //         comment: '',
+    //         likes: 0,
+    //         dislikes: 0,
+    //         created_at: '',
+    //             user: {
+    //                 user_id: '',
+    //                 name: ''
+    //         }
+    //         }
+    //     )
+    //     const updateLikeComment = {
+    //         user_id: userId,
+    //         comment_id: idToLikeOrDislike,
+    //         like: likesSended,
+    //     }
+    //     const commentLikeDB = commentLike.toPostModelsDB()
+    //     await this.postsDatabase.updateComment(commentLikeDB, idToLikeOrDislike)
+    //     await this.postsDatabase.updateLikeOrDislikeComment(updateLikeComment)
+    // }
 
 }

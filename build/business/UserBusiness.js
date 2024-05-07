@@ -64,7 +64,7 @@ class UserBusiness {
             if (!isPasswordCorrect) {
                 throw new BadRequestError_1.BadRequestError("Incorrect email or password.");
             }
-            const user = new UserModel_1.default(userDB.id, userDB.username, userDB.email, userDB.password, userDB.role, userDB.created_at);
+            const user = new UserModel_1.default(userDB.id, userDB.username, userDB.email, '', userDB.role, userDB.created_at);
             const payload = {
                 id: user.getId(),
                 username: user.getName(),

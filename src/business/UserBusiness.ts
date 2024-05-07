@@ -85,7 +85,7 @@ public login = async (input: LoginInputDTO): Promise<LoginOutputDTO> => {
       userDB.id,
       userDB.username,
       userDB.email,
-      userDB.password,
+      '',
       userDB.role,
       userDB.created_at
   )
