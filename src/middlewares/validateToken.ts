@@ -1,12 +1,21 @@
-// validateToken.ts
 import { Request, Response, NextFunction } from 'express';
+
 export function validateToken(req: Request, res: Response, next: NextFunction) {
-  const token = req.headers.authorization?.split('Bearer ')[1];
-  console.log('Token recebido:', req.headers.authorization);
+    const authorizationHeader = req.headers.authorization;
 
-  if (typeof token !== 'string' || token.trim() === '') {
-    return res.status(400).json({ error: 'Token inválido ou ausente' });
-  }
+    if (!authorizationHeader) {
+        return res.status(401).json({ error: 'Authorization missing' });
+    }
 
-  next(); 
+    if (!authorizationHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    const token = authorizationHeader.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'Invalid or missing token' });
+    }
+
+    next();
 }
