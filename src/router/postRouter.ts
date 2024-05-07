@@ -22,5 +22,7 @@ postRouter.post("/", validateToken, postsController.createPost);
 // postRouter.post("/:id", validateToken, postsController.createComment);
 // postRouter.post("/likeOrDislike", postsController.likeOrDislike);
 
+// src/router/postRouter.ts
+
 
 

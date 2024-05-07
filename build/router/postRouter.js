@@ -17,3 +17,4 @@ exports.postRouter.get("/", validateToken_1.validateToken, postsController.getPo
 exports.postRouter.post("/", validateToken_1.validateToken, postsController.createPost);
 // postRouter.post("/:id", validateToken, postsController.createComment);
 // postRouter.post("/likeOrDislike", postsController.likeOrDislike);
+// src/router/postRouter.ts
