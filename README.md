@@ -6,7 +6,7 @@ Este é o back-end do projeto Labeddit, um projeto integrador que visa criar uma
 ## Links de Acesso 🌐
 - **Deploy:** [Labeddit no Render](https://labeddit-o4al.onrender.com)
 - **API Postman:** [Documentação da API no Postman](https://documenter.getpostman.com/view/28316428/2s9Yyy7d9g)
-- **LabEddit Front-End:** [Repositório do LabEddit Front-End](https://github.com/Re-Santos/projeto-fullStack-front)
+- **LabEddit Front-End:** [Repositório do LabEddit Front-End](https://github.com/Re-Santos/novo-front-labeddit)
 
 ## Tecnologias Utilizadas 🛠️
 - Node.js 
